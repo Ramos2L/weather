@@ -1,10 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:weather/services/weather_services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
-import '../models/weather_model.dart';
+import '../../models/weather_model.dart';
 
 class WeatherConsultPage extends StatefulWidget {
   const WeatherConsultPage({super.key});
@@ -27,7 +27,9 @@ class _WeatherConsultPageState extends State<WeatherConsultPage> {
         _weather = weather;
       });
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -42,17 +44,13 @@ class _WeatherConsultPageState extends State<WeatherConsultPage> {
       case 'smoke':
         return 'assets/smoke.json';
       case 'haze':
-      // return 'assets/haze.json';
       case 'dust':
-      // return 'assets/dust.json';
       case 'fog':
-      // return 'assets/fog.json';
       case 'rain':
         return 'assets/rain.json';
       case 'shower rain':
         return 'assets/rain.json';
       case 'drizzle':
-      // return 'assets/drizzle.dart';
       case 'thunderstorm':
         return 'assets/thunderstorm.json';
       case 'clear':
@@ -84,7 +82,7 @@ class _WeatherConsultPageState extends State<WeatherConsultPage> {
             ),
             Lottie.asset(getWeatherAnimations(_weather?.mainCondition)),
             Text(
-              _weather?.temperature.round().toString() ?? '´°C',
+              '${_weather?.temperature.round().toString()} °C',
               style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
             ),
             Text(

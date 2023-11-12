@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:weather/core/theme.dart';
-import 'package:weather/weather/weather_consult_page.dart';
+import 'package:weather/pages/weather/weather_consult_page.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
