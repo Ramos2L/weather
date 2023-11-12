@@ -68,6 +68,8 @@ class _WeatherConsultPageState extends State<WeatherConsultPage> {
     _fetchWeather();
   }
 
+  bool activeMoreInformation = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,9 +82,18 @@ class _WeatherConsultPageState extends State<WeatherConsultPage> {
               _weather?.cityName ?? 'loading city...',
               style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
             ),
-            Lottie.asset(getWeatherAnimations(_weather?.mainCondition)),
+            InkWell(
+              onTap: () {
+                setState(() {
+                  activeMoreInformation = !activeMoreInformation;
+                });
+              },
+              child: Lottie.asset(getWeatherAnimations(_weather?.mainCondition)),
+            ),
             Text(
-              '${_weather?.temperature.round().toString()} °C',
+              _weather?.temperature.round().toString() != null
+                  ? '${_weather?.temperature.toString()} °C'
+                  : '...',
               style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
             ),
             Text(
@@ -91,6 +102,39 @@ class _WeatherConsultPageState extends State<WeatherConsultPage> {
                 color: Theme.of(context).textTheme.bodySmall?.color,
               ),
             ),
+            activeMoreInformation
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Column(
+                      children: [
+                        Text(
+                          _weather?.description != null
+                              ? 'description: ${_weather?.description}'
+                              : '',
+                          style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                        ),
+                        Text(
+                          _weather?.sensation.toString() != null ? 'sensation: ${_weather?.sensation.toString()} °C' : '',
+                          style: TextStyle(
+                            color: Theme.of(context).textTheme.bodySmall?.color,
+                          ),
+                        ),
+                        Text(
+                          _weather?.humidity.toString() != null ? 'humidity: ${_weather?.humidity.toString()} %' : '',
+                          style: TextStyle(
+                            color: Theme.of(context).textTheme.bodySmall?.color,
+                          ),
+                        ),
+                        Text(
+                          _weather?.wind.toString() != null ? 'wind: ${_weather?.wind.toString()}' : '',
+                          style: TextStyle(
+                            color: Theme.of(context).textTheme.bodySmall?.color,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : const SizedBox(),
           ],
         ),
       ),
